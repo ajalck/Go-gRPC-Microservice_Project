@@ -1,0 +1,2 @@
+auth_proto:
+	cd order_management && protoc --go_out=. --go-grpc_out=. pkg/pb/auth.proto
