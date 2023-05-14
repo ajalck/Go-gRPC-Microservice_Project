@@ -1,4 +1,4 @@
-module Go-gRPC-Microservice_Project/auth_management
+module github.com/ajalck/Go-gRPC-Microservice_Project/auth_management
 
 go 1.20
 

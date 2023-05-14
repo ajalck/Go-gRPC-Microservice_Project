@@ -1,4 +1,4 @@
-module Go-gRPC-Microservice_Project/api_gateway
+module github.com/ajalck/Go-gRPC-Microservice_Project/api_gateway
 
 go 1.20
 
@@ -10,7 +10,7 @@ require (
 )
 
 require (
-    github.com/ajalck/Go-gRPC-Microservice_Project/auth_management v0.0.0-20230514103723-ce7e3ee8e9ac
+    // github.com/ajalck/Go-gRPC-Microservice_Project/auth_management v0.0.0-20230514103723-ce7e3ee8e9ac
 	github.com/bytedance/sonic v1.8.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/fatih/color v1.13.0 // indirect
