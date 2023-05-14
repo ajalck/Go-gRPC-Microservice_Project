@@ -1,8 +1,8 @@
 package main
 
 import (
-	auth "go-grpc-microservice-api_gateway/pkg/auth/routes"
-	"go-grpc-microservice-api_gateway/pkg/config"
+	auth "Go-gRPC-Microservice_Project/api_gateway/pkg/auth/routes"
+	"Go-gRPC-Microservice_Project/api_gateway/pkg/config"
 
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-hclog"
