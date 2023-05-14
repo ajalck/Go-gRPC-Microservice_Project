@@ -1,18 +1,19 @@
 package client
 
 import (
-	"Go-gRPC-Microservice_Project/api_gateway/pkg/config"
+	"github.com/ajalck/Go-gRPC-Microservice_Project/api_gateway/pkg/config"
 
-	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/Pb"
+	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/pb"
+
 	"github.com/hashicorp/go-hclog"
 	"google.golang.org/grpc"
 )
 
 type ServiceClient struct {
-	Client Pb.AuthServiceClient
+	Client pb.AuthServiceClient
 }
 
-func InitServiceClient(c *config.Config, logger hclog.Logger) Pb.AuthServiceClient {
+func InitServiceClient(c *config.Config, logger hclog.Logger) pb.AuthServiceClient {
 
 	// "Go-gRPC-Microservice_Project/auth_management/pkg/Pb"
 	logger.Info("API Gateway : Initiated AuthService Client")
@@ -22,5 +23,5 @@ func InitServiceClient(c *config.Config, logger hclog.Logger) Pb.AuthServiceClie
 		logger.Error("Could not connect AuthService :", err)
 	}
 
-	return Pb.NewAuthServiceClient(cc)
+	return pb.NewAuthServiceClient(cc)
 }
