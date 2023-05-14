@@ -1,2 +1,2 @@
 auth_proto:
-	cd auth_management && protoc --go_out=. --go-grpc_out=. pkg/pb/auth.proto
+	cd auth_management && protoc --go_out=. --go-grpc_out=. pkg/Pb/auth.proto
