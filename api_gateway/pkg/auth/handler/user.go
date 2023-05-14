@@ -2,18 +2,21 @@ package handler
 
 import (
 	"context"
-	"go-grpc-microservice-auth_management/pkg/pb"
+	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/Pb"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
+type AuthHandler struct {
+	C Pb.AuthServiceClient
+}
 type RegisterRequestBody struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
 
-func Register(ctx *gin.Context, c pb.AuthServiceClient) {
+func (h *AuthHandler) Register(ctx *gin.Context) {
 	body := &RegisterRequestBody{}
 
 	if err := ctx.BindJSON(&body); err != nil {
@@ -21,7 +24,7 @@ func Register(ctx *gin.Context, c pb.AuthServiceClient) {
 		return
 	}
 
-	res, err := c.Register(context.Background(), &pb.RegisterRequest{
+	res, err := h.C.Register(context.Background(), &Pb.RegisterRequest{
 		Email:    body.Email,
 		Password: body.Password,
 	})
