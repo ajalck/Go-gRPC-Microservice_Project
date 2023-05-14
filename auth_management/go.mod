@@ -1,4 +1,4 @@
-module go-grpc-microservice-auth_management
+module Go-gRPC-Microservice_Project/auth_management
 
 go 1.20
 
