@@ -3,6 +3,7 @@ package handler
 import (
 	"context"
 	"net/http"
+	"strconv"
 
 	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/pb"
 
@@ -34,7 +35,6 @@ func (h *AuthHandler) Register(ctx *gin.Context) {
 		ctx.AbortWithError(http.StatusBadGateway, err)
 	}
 	ctx.JSON(int(res.Status), res)
-
 }
 func (h *AuthHandler) Login(ctx *gin.Context) {
 	body := &RegisterRequestBody{}
@@ -53,9 +53,8 @@ func (h *AuthHandler) Login(ctx *gin.Context) {
 		ctx.AbortWithError(http.StatusBadGateway, err)
 		return
 	}
-	ctx.Set("Content-Type", "application/json")
-	ctx.Set("Token", res.GetToken())
-	ctx.Set("User_ID", res.GetUserid())
+	ctx.Writer.Header().Set("Token", res.GetToken())
+	ctx.Writer.Header().Set("User_ID", strconv.Itoa(int(res.Userid)))
 	ctx.JSON(int(res.Status), res.GetMessage())
 
 }
