@@ -15,10 +15,9 @@ type ServiceClient struct {
 
 func InitServiceClient(c *config.Config, logger hclog.Logger) pb.AuthServiceClient {
 
-	// "Go-gRPC-Microservice_Project/auth_management/pkg/Pb"
 	logger.Info("API Gateway : Initiated AuthService Client")
 
-	cc, err := grpc.Dial(c.AuthSrvUrl, grpc.WithInsecure, grpc.WithBlock)
+	cc, err := grpc.Dial(c.AuthSrvUrl, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		logger.Error("Could not connect AuthService :", err)
 	}
