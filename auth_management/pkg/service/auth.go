@@ -2,10 +2,12 @@ package service
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/models"
 	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/pb"
+	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/utils"
 	"gorm.io/gorm"
 )
 
@@ -17,9 +19,13 @@ type AuthServer struct {
 func (s *AuthServer) Register(c context.Context, req *pb.RegisterRequest) (*pb.RegisterResponse, error) {
 	fmt.Println("Auth Service : Register")
 
+	password, err := utils.HashPassword(req.Password)
+	if err != nil {
+		return nil, errors.New("Error in hashing password")
+	}
 	user := models.User{
 		Email:    req.Email,
-		Password: req.Password,
+		Password: password,
 	}
 	result := s.DB.Create(&user)
 	if result.Error != nil {
@@ -28,12 +34,11 @@ func (s *AuthServer) Register(c context.Context, req *pb.RegisterRequest) (*pb.R
 			Message: "Failed to Register new user",
 		}, result.Error
 	}
-	var userid int64
-	s.DB.Select("id").Where("email", req.Email).First(userid)
+
 	return &pb.RegisterResponse{
 		Status:  200,
 		Message: "Registration successfull",
-		Userid:  userid,
+		Userid:  int64(user.ID),
 	}, nil
 }
 func (s *AuthServer) Login(c context.Context, req *pb.LoginRequest) (*pb.LoginResponse, error) {
