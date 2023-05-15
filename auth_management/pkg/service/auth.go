@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"fmt"
-	"net/http"
 
 	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/models"
 	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/pb"
@@ -16,7 +15,7 @@ type AuthServer struct {
 }
 
 func (s *AuthServer) Register(c context.Context, req *pb.RegisterRequest) (*pb.RegisterResponse, error) {
-	fmt.Println("Auth Register : Register")
+	fmt.Println("Auth Service : Register")
 
 	user := models.User{
 		Email:    req.Email,
@@ -25,7 +24,7 @@ func (s *AuthServer) Register(c context.Context, req *pb.RegisterRequest) (*pb.R
 	result := s.DB.Create(&user)
 	if result.Error != nil {
 		return &pb.RegisterResponse{
-			Status: http.StatusConflict,
+			Status: 400,
 			Error:  result.Explain(result.Error.Error()),
 		}, result.Error
 	}
