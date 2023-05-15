@@ -1,12 +1,14 @@
 package main
 
 import (
-	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/pb"
-	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/config"
-	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/db"
-	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/service"
 	"log"
 	"net"
+
+	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/config"
+	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/db"
+	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/pb"
+	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/service"
+	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/utils"
 
 	"google.golang.org/grpc"
 )
@@ -27,8 +29,13 @@ func main() {
 	}
 
 	grpcServer := grpc.NewServer()
+	jwtwrapper := utils.JWTWrapper{
+		SecretKey: config.SecretKey,
+		Issuer:    "go-grpc-auth-server",
+	}
 	server := &service.AuthServer{
-		DB: DB.DB,
+		DB:         DB.DB,
+		Jwtwrapper: jwtwrapper,
 	}
 	pb.RegisterAuthServiceServer(grpcServer, server)
 

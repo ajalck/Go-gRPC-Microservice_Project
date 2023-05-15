@@ -12,7 +12,8 @@ import (
 )
 
 type AuthServer struct {
-	DB *gorm.DB
+	DB         *gorm.DB
+	Jwtwrapper utils.JWTWrapper
 	pb.UnimplementedAuthServiceServer
 }
 
@@ -42,7 +43,33 @@ func (s *AuthServer) Register(c context.Context, req *pb.RegisterRequest) (*pb.R
 	}, nil
 }
 func (s *AuthServer) Login(c context.Context, req *pb.LoginRequest) (*pb.LoginResponse, error) {
-	return &pb.LoginResponse{}, nil
+	user := &models.User{}
+	result := s.DB.Where("email", req.Email).First(&user)
+	if result.Error != nil {
+		return &pb.LoginResponse{
+			Status:  400,
+			Message: "Failed to Login",
+		}, errors.New("User not found")
+	}
+	if err := utils.CheckPasswordHash(req.Password, user.Password); err != nil {
+		return &pb.LoginResponse{
+			Status:  400,
+			Message: "Failed to Login",
+		}, errors.New("Mismatch in password")
+	}
+	token, err := s.Jwtwrapper.GenerateToken(*user)
+	if err != nil {
+		return &pb.LoginResponse{
+			Status:  400,
+			Message: "Failed to Login",
+		}, err
+	}
+	return &pb.LoginResponse{
+		Status:  200,
+		Message: "Logged in Successfully",
+		Userid:  int32(user.ID),
+		Token:   token,
+	}, nil
 }
 func (s *AuthServer) Validate(c context.Context, req *pb.ValidateRequest) (*pb.ValidateResponse, error) {
 	return &pb.ValidateResponse{}, nil
