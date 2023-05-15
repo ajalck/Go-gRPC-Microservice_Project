@@ -28,7 +28,8 @@ message LoginRequest{
 message  LoginResponse{
     int64 status = 1;
     string message = 2;
-    string token = 3;
+    int32 userid = 3;
+    string token = 4;
 }
   
 message ValidateRequest{
