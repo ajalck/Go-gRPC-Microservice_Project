@@ -3,7 +3,7 @@ module github.com/ajalck/Go-gRPC-Microservice_Project/api_gateway
 go 1.20
 
 require (
-	github.com/ajalck/Go-gRPC-Microservice_Project/auth_management v0.0.0-20230515105342-095650a1c41e
+	github.com/ajalck/Go-gRPC-Microservice_Project/auth_management v0.0.0-20230515120221-a85341d8c86c
 	github.com/gin-gonic/gin v1.9.0
 	github.com/hashicorp/go-hclog v1.5.0
 	github.com/spf13/viper v1.15.0
