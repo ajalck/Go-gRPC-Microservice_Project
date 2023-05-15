@@ -27,7 +27,9 @@ func main() {
 	}
 
 	grpcServer := grpc.NewServer()
-	server := &service.AuthServer{}
+	server := &service.AuthServer{
+		DB: DB.DB,
+	}
 	pb.RegisterAuthServiceServer(grpcServer, server)
 
 	log.Println("Server started listening at :", config.Port)
