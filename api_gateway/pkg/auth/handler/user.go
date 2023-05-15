@@ -35,7 +35,7 @@ func (h *AuthHandler) Register(ctx *gin.Context) {
 		ctx.AbortWithError(http.StatusBadGateway, err)
 		return
 	}
-	fmt.Println(res.GetStatus())
+	fmt.Println(res)
 	ctx.JSON(int(res.Status), res)
 
 }
