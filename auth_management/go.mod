@@ -3,6 +3,7 @@ module github.com/ajalck/Go-gRPC-Microservice_Project/auth_management
 go 1.20
 
 require (
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/spf13/viper v1.15.0
 	golang.org/x/crypto v0.9.0
 	google.golang.org/grpc v1.55.0
