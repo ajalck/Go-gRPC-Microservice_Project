@@ -2,9 +2,9 @@ package routes
 
 import (
 	"fmt"
-	"Go-gRPC-Microservice_Project/api_gateway/pkg/auth/client"
-	h "Go-gRPC-Microservice_Project/api_gateway/pkg/auth/handler"
-	"Go-gRPC-Microservice_Project/api_gateway/pkg/config"
+	"github.com/ajalck/Go-gRPC-Microservice_Project/api_gateway/pkg/auth/client"
+	h "github.com/ajalck/Go-gRPC-Microservice_Project/api_gateway/pkg/auth/handler"
+	"github.com/ajalck/Go-gRPC-Microservice_Project/api_gateway/pkg/config"
 
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-hclog"

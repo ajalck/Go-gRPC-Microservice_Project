@@ -1,7 +1,7 @@
 package db
 
 import (
-	"Go-gRPC-Microservice_Project/auth_management/pkg/models"
+	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/models"
 	"log"
 
 	"gorm.io/driver/postgres"

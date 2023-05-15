@@ -1,10 +1,10 @@
 package main
 
 import (
-	"Go-gRPC-Microservice_Project/auth_management/pkg/Pb"
-	"Go-gRPC-Microservice_Project/auth_management/pkg/config"
-	"Go-gRPC-Microservice_Project/auth_management/pkg/db"
-	"Go-gRPC-Microservice_Project/auth_management/pkg/service"
+	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/pb"
+	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/config"
+	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/db"
+	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/service"
 	"log"
 	"net"
 
@@ -28,7 +28,7 @@ func main() {
 
 	grpcServer := grpc.NewServer()
 	server := &service.AuthServer{}
-	Pb.RegisterAuthServiceServer(grpcServer, server)
+	pb.RegisterAuthServiceServer(grpcServer, server)
 
 	log.Println("Server started listening at :", config.Port)
 	if err := grpcServer.Serve(lis); err != nil {
