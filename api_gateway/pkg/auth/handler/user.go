@@ -37,3 +37,26 @@ func (h *AuthHandler) Register(ctx *gin.Context) {
 	ctx.JSON(int(res.Status), res)
 
 }
+func (h *AuthHandler) Login(ctx *gin.Context) {
+	body := &RegisterRequestBody{}
+
+	if err := ctx.BindJSON(&body); err != nil {
+		ctx.AbortWithError(http.StatusBadRequest, err)
+		return
+	}
+
+	res, err := h.C.Login(context.Background(), &pb.LoginRequest{
+		Email:    body.Email,
+		Password: body.Password,
+	})
+
+	if err != nil {
+		ctx.AbortWithError(http.StatusBadGateway, err)
+		return
+	}
+	ctx.Set("Content-Type", "application/json")
+	ctx.Set("Token", res.GetToken())
+	ctx.Set("User_ID", res.GetUserid())
+	ctx.JSON(int(res.Status), res.GetMessage())
+
+}
