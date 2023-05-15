@@ -24,13 +24,16 @@ func (s *AuthServer) Register(c context.Context, req *pb.RegisterRequest) (*pb.R
 	result := s.DB.Create(&user)
 	if result.Error != nil {
 		return &pb.RegisterResponse{
-			Status: 400,
-			Error:  result.Explain(result.Error.Error()),
+			Status:  400,
+			Message: "Failed to Register new user",
 		}, result.Error
 	}
-
+	var userid int64
+	s.DB.Select("id").Where("email", req.Email).First(userid)
 	return &pb.RegisterResponse{
-		Status: 200,
+		Status:  200,
+		Message: "Registration successfull",
+		Userid:  userid,
 	}, nil
 }
 func (s *AuthServer) Login(c context.Context, req *pb.LoginRequest) (*pb.LoginResponse, error) {

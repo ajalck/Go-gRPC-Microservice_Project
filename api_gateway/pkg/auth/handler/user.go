@@ -1,9 +1,11 @@
 package handler
 
 import (
-	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/pb"
 	"context"
+	"fmt"
 	"net/http"
+
+	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/pb"
 
 	"github.com/gin-gonic/gin"
 )
@@ -33,6 +35,7 @@ func (h *AuthHandler) Register(ctx *gin.Context) {
 		ctx.AbortWithError(http.StatusBadGateway, err)
 		return
 	}
+	fmt.Println(res.GetStatus())
 	ctx.JSON(int(res.Status), res)
 
 }
