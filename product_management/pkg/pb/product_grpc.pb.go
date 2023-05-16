@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 type ProductServiceClient interface {
 	CreateProduct(ctx context.Context, in *CreateProductRequest, opts ...grpc.CallOption) (*CreateProductResponse, error)
 	ListProduct(ctx context.Context, in *ListProductRequest, opts ...grpc.CallOption) (*ListProductResponse, error)
+	ViewProductByID(ctx context.Context, in *ViewProductRequest, opts ...grpc.CallOption) (*ViewProductResponse, error)
 	UpdateStock(ctx context.Context, in *UpdateStockRequest, opts ...grpc.CallOption) (*UpdateStockResponse, error)
 }
 
@@ -49,6 +50,15 @@ func (c *productServiceClient) ListProduct(ctx context.Context, in *ListProductR
 	return out, nil
 }
 
+func (c *productServiceClient) ViewProductByID(ctx context.Context, in *ViewProductRequest, opts ...grpc.CallOption) (*ViewProductResponse, error) {
+	out := new(ViewProductResponse)
+	err := c.cc.Invoke(ctx, "/product.ProductService/ViewProductByID", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *productServiceClient) UpdateStock(ctx context.Context, in *UpdateStockRequest, opts ...grpc.CallOption) (*UpdateStockResponse, error) {
 	out := new(UpdateStockResponse)
 	err := c.cc.Invoke(ctx, "/product.ProductService/UpdateStock", in, out, opts...)
@@ -64,6 +74,7 @@ func (c *productServiceClient) UpdateStock(ctx context.Context, in *UpdateStockR
 type ProductServiceServer interface {
 	CreateProduct(context.Context, *CreateProductRequest) (*CreateProductResponse, error)
 	ListProduct(context.Context, *ListProductRequest) (*ListProductResponse, error)
+	ViewProductByID(context.Context, *ViewProductRequest) (*ViewProductResponse, error)
 	UpdateStock(context.Context, *UpdateStockRequest) (*UpdateStockResponse, error)
 	mustEmbedUnimplementedProductServiceServer()
 }
@@ -77,6 +88,9 @@ func (UnimplementedProductServiceServer) CreateProduct(context.Context, *CreateP
 }
 func (UnimplementedProductServiceServer) ListProduct(context.Context, *ListProductRequest) (*ListProductResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListProduct not implemented")
+}
+func (UnimplementedProductServiceServer) ViewProductByID(context.Context, *ViewProductRequest) (*ViewProductResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ViewProductByID not implemented")
 }
 func (UnimplementedProductServiceServer) UpdateStock(context.Context, *UpdateStockRequest) (*UpdateStockResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateStock not implemented")
@@ -130,6 +144,24 @@ func _ProductService_ListProduct_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ProductService_ViewProductByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ViewProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServiceServer).ViewProductByID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/product.ProductService/ViewProductByID",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServiceServer).ViewProductByID(ctx, req.(*ViewProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ProductService_UpdateStock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateStockRequest)
 	if err := dec(in); err != nil {
@@ -162,6 +194,10 @@ var ProductService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListProduct",
 			Handler:    _ProductService_ListProduct_Handler,
+		},
+		{
+			MethodName: "ViewProductByID",
+			Handler:    _ProductService_ViewProductByID_Handler,
 		},
 		{
 			MethodName: "UpdateStock",
