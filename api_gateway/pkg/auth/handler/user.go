@@ -3,7 +3,6 @@ package handler
 import (
 	"context"
 	"net/http"
-	"strconv"
 
 	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/pb"
 

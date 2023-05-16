@@ -20,7 +20,7 @@ func InitMiddleware(client *auth.ServiceClient) *MiddlewareServiceClient {
 		authClient: client,
 	}
 }
-func (m *MiddlewareServiceClient) Autherize(c *gin.Context) {
+func (m *MiddlewareServiceClient) Authorize(c *gin.Context) {
 	authtoken := c.Request.Header.Get("Autherization")
 	if authtoken == "" {
 		c.JSON(http.StatusUnauthorized, "Failed to Autherize")
