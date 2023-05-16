@@ -11,7 +11,7 @@ require (
 )
 
 require (
-	github.com/ajalck/Go-gRPC-Microservice_Project/product_management v0.0.0-20230516095818-c50a3ba2e509
+	github.com/ajalck/Go-gRPC-Microservice_Project/product_management v0.0.0-20230516160918-19e50c45b8a9
 	github.com/bytedance/sonic v1.8.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/fatih/color v1.13.0 // indirect
