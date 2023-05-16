@@ -3,8 +3,8 @@ package main
 import (
 	auth "github.com/ajalck/Go-gRPC-Microservice_Project/api_gateway/pkg/auth/routes"
 	"github.com/ajalck/Go-gRPC-Microservice_Project/api_gateway/pkg/config"
+	order "github.com/ajalck/Go-gRPC-Microservice_Project/api_gateway/pkg/order/routes"
 	product "github.com/ajalck/Go-gRPC-Microservice_Project/api_gateway/pkg/product/routes"
-
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-hclog"
 )
@@ -22,6 +22,7 @@ func main() {
 
 	authSvcC := auth.AuthRoutes(r, &c, logger)
 	product.ProductRoutes(r, &c, authSvcC)
+	order.OrderRoutes(r, &c, authSvcC)
 
 	r.Run(c.Port)
 

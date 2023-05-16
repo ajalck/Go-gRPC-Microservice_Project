@@ -10,6 +10,8 @@ require (
 	google.golang.org/grpc v1.55.0
 )
 
+require github.com/ajalck/Go-gRPC-Microservice_Project/order_management v0.0.0-20230516203623-f97dea6f5a6f
+
 require (
 	github.com/ajalck/Go-gRPC-Microservice_Project/product_management v0.0.0-20230516160918-19e50c45b8a9
 	github.com/bytedance/sonic v1.8.0 // indirect
