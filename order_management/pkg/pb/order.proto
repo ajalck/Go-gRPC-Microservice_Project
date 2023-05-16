@@ -21,7 +21,8 @@ message CreateOrderResponse{
     string ProductName = 4;
     int32 Quantity = 5;
     float TotalPrice = 6;
-    string OrderStatus = 7;
+    int32 OrderId = 7;
+    string OrderStatus = 8;
 }
 message CancelOrderRequest{
     int32 OrderId = 1;
