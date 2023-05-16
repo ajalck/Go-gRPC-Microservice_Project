@@ -45,6 +45,27 @@ func (h *ProductHandler) ListProduct(ctx *gin.Context) {
 	ctx.JSON(200, res)
 }
 
+type ViewProductRequestBody struct {
+	ProductId int32 `json:"product_id" gorm:"not null"`
+}
+
+func (h *ProductHandler) ViewProductByID(c *gin.Context) {
+	body := &ViewProductRequestBody{}
+
+	if err := c.BindJSON(&body); err != nil {
+		c.JSON(http.StatusBadRequest, err)
+		return
+	}
+	res, err := h.PdtClient.ViewProductByID(context.Background(), &pb.ViewProductRequest{
+		ProductId: body.ProductId,
+	})
+	if err != nil {
+		c.JSON(http.StatusBadGateway, res)
+		return
+	}
+	c.JSON(200, res)
+}
+
 type UpdateProductRequestBody struct {
 	ProductId int32 `json:"product_id" gorm:"not null" binding:"required,numeric"`
 	Stock     int32 `json:"stock" gorm:"not null"`
