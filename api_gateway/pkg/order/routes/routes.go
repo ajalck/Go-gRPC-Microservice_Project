@@ -12,15 +12,15 @@ import (
 func OrderRoutes(r *gin.Engine, c *config.Config, authSvcC *authClient.ServiceClient) {
 	authorize := middleware.InitMiddleware(authSvcC)
 
-	pdtSvc := client.ServiceClient{
+	ordersvc := client.ServiceClient{
 		Client: client.InitServiceClient(c),
 	}
-	ordrHandler := handler.OrderHandler{C: pdtSvc.Client}
+	ordrHandler := handler.OrderHandler{C: ordersvc.Client}
 
 	user := r.Group("/user")
 	{
 		user.Use(authorize.Authorize)
-		user.POST("/createorder", OrderRoutes.CreateOrder)
+		user.POST("/createorder", ordrHandler.CreateOrder)
 		user.PATCH("/cancelorder", ordrHandler.CancelOrder)
 	}
 }
