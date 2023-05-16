@@ -72,5 +72,14 @@ func (s *AuthServer) Login(c context.Context, req *pb.LoginRequest) (*pb.LoginRe
 	}, nil
 }
 func (s *AuthServer) Validate(c context.Context, req *pb.ValidateRequest) (*pb.ValidateResponse, error) {
-	return &pb.ValidateResponse{}, nil
+
+	claims, err := s.Jwtwrapper.ValidateToken(req.Token)
+	if err != nil {
+		return nil, err
+	}
+	return &pb.ValidateResponse{
+		Status:  200,
+		Message: "Autherization Successfull",
+		UserId:  claims.Id,
+	}, nil
 }
