@@ -55,8 +55,8 @@ func (h *AuthHandler) Login(ctx *gin.Context) {
 		Message: res.Message,
 		Userid:  res.Userid,
 	}
-	ctx.Set("Content-Type", "application/json")
-	ctx.Set("Token", res.GetToken())
+	ctx.Writer.Header().Set("Content-Type", "application/json")
+	ctx.Writer.Header().Set("Token", res.GetToken())
 	ctx.JSON(int(res.Status), output)
 
 }

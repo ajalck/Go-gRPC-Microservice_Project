@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/ajalck/Go-gRPC-Microservice_Project/product_management/pkg/models"
 	"github.com/ajalck/Go-gRPC-Microservice_Project/product_management/pkg/pb"
@@ -56,10 +57,12 @@ func (s *ProductServer) UpdateStock(ctx context.Context, req *pb.UpdateStockRequ
 	product := models.Products{}
 	result := s.DB.Where("id", req.ProductId).First(&product)
 	if result.Error != nil {
+		fmt.Println(result.Error)
 		return nil, errors.New("Product not found")
 	}
-	result = s.DB.Where("id", req.ProductId).Update("stock", req.Stock)
+	result = s.DB.Table("products").Where("id", req.ProductId).Update("stock", req.Stock)
 	if result.Error != nil {
+		fmt.Println(result.Error)
 		return nil, result.Error
 	}
 

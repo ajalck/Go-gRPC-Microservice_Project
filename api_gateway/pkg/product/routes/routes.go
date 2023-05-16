@@ -22,8 +22,9 @@ func ProductRoutes(r *gin.Engine, c *config.Config, authSvcC *authClient.Service
 		admin.POST("/createproduct", pdtHandler.CreateProduct)
 		admin.PATCH("/updatestock", pdtHandler.UpdateStock)
 	}
-	user := r.Use(authorize.Authorize)
+	user := r.Group("/user")
 	{
-		user.GET("listproducts", pdtHandler.ListProduct)
+		user.Use(authorize.Authorize)
+		user.GET("/listproducts", pdtHandler.ListProduct)
 	}
 }

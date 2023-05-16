@@ -21,14 +21,14 @@ func InitMiddleware(client *auth.ServiceClient) *MiddlewareServiceClient {
 	}
 }
 func (m *MiddlewareServiceClient) Authorize(c *gin.Context) {
-	authtoken := c.Request.Header.Get("Autherization")
+	authtoken := c.Request.Header.Get("Authorization")
 	if authtoken == "" {
-		c.JSON(http.StatusUnauthorized, "Failed to Autherize")
+		c.JSON(http.StatusUnauthorized, "Failed to Authorize")
 		return
 	}
 	token := strings.Split(authtoken, "Bearer ")
 	if len(token) > 2 {
-		c.JSON(http.StatusUnauthorized, "Failed to Autherize")
+		c.JSON(http.StatusUnauthorized, "Failed to Authorize")
 		return
 	}
 	res, err := m.authClient.Client.Validate(context.Background(), &pb.ValidateRequest{
