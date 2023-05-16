@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/go-hclog"
 )
 
-func AuthRoutes(r *gin.Engine, c *config.Config, logger hclog.Logger) {
+func AuthRoutes(r *gin.Engine, c *config.Config, logger hclog.Logger) *client.ServiceClient {
 	svc := &client.ServiceClient{
 		Client: client.InitServiceClient(c, logger),
 	}
@@ -19,4 +19,5 @@ func AuthRoutes(r *gin.Engine, c *config.Config, logger hclog.Logger) {
 		user.POST("/register", authHandler.Register)
 		user.POST("/login", authHandler.Login)
 	}
+	return svc
 }

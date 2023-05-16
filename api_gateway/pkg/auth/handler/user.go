@@ -48,13 +48,16 @@ func (h *AuthHandler) Login(ctx *gin.Context) {
 		Email:    body.Email,
 		Password: body.Password,
 	})
-
 	if err != nil {
 		ctx.AbortWithError(http.StatusBadGateway, err)
 		return
 	}
-	ctx.Writer.Header().Set("Token", res.GetToken())
-	ctx.Writer.Header().Set("User_ID", strconv.Itoa(int(res.Userid)))
-	ctx.JSON(int(res.Status), res.GetMessage())
+	output := &pb.LoginResponse{
+		Message: res.Message,
+		Userid:  res.Userid,
+	}
+	ctx.Set("Content-Type", "application/json")
+	ctx.Set("Token", res.GetToken())
+	ctx.JSON(int(res.Status), output)
 
 }
