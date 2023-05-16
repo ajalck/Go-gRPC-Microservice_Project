@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package product;
+
+option go_package = "./pkg/pb";
+
+service ProductService{
+    rpc CreateProduct (CreateProductRequest) returns (CreateProductResponse);
+    rpc ListProduct (ListProductRequest) returns (ListProductResponse);
+    rpc UpdateStock (UpdateStockRequest) returns (UpdateStockResponse);
+}
+
+message CreateProductRequest{
+    string ProductName = 1;
+    int32 Stock = 2;
+    float Price = 3;
+}
+message CreateProductResponse{
+    string Message = 1;
+    int32 ProductId = 2;
+}
+message ProductDetails{
+    int32 ProductId = 1;
+    string ProductName = 2;
+    int32 Stock = 3;
+    float Price = 4;
+}
+message ListProductRequest{}
+message ListProductResponse{
+    repeated ProductDetails Products= 1;
+}
+message UpdateStockRequest{
+    int32 ProductId = 1;
+    int32 Stock = 2;
+}
+message UpdateStockResponse{
+    string Message = 1;
+    int32 ProductId = 2;
+}
