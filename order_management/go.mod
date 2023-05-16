@@ -3,7 +3,7 @@ module github.com/ajalck/Go-gRPC-Microservice_Project/order_management
 go 1.20
 
 require (
-	github.com/ajalck/Go-gRPC-Microservice_Project/product_management v0.0.0-20230516141608-933ac9013625
+	github.com/ajalck/Go-gRPC-Microservice_Project/product_management v0.0.0-20230516160918-19e50c45b8a9
 	github.com/spf13/viper v1.15.0
 	google.golang.org/grpc v1.55.0
 	google.golang.org/protobuf v1.30.0
