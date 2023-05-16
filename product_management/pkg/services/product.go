@@ -53,6 +53,21 @@ func (s *ProductServer) ListProduct(ctx context.Context, req *pb.ListProductRequ
 		Products: pd,
 	}, nil
 }
+func (s *ProductServer) ViewProductByID(ctx context.Context, req *pb.ViewProductRequest) (*pb.ViewProductResponse, error) {
+	product := models.Products{}
+	result := s.DB.Table("products").Where("id", req.ProductId).First(&product)
+	if result.Error != nil {
+		return &pb.ViewProductResponse{Message: "Product not found"}, result.Error
+	}
+	return &pb.ViewProductResponse{
+		Product: &pb.ProductDetails{
+			ProductId:   int32(product.ID),
+			ProductName: product.ProductName,
+			Stock:       product.Stock,
+			Price:       product.Price,
+		},
+	}, nil
+}
 func (s *ProductServer) UpdateStock(ctx context.Context, req *pb.UpdateStockRequest) (*pb.UpdateStockResponse, error) {
 	product := models.Products{}
 	result := s.DB.Where("id", req.ProductId).First(&product)

@@ -7,6 +7,7 @@ option go_package = "./pkg/pb";
 service ProductService{
     rpc CreateProduct (CreateProductRequest) returns (CreateProductResponse);
     rpc ListProduct (ListProductRequest) returns (ListProductResponse);
+    rpc ViewProductByID (ViewProductRequest) returns (ViewProductResponse);
     rpc UpdateStock (UpdateStockRequest) returns (UpdateStockResponse);
 }
 
@@ -28,6 +29,13 @@ message ProductDetails{
 message ListProductRequest{}
 message ListProductResponse{
     repeated ProductDetails Products= 1;
+}
+message ViewProductRequest{
+    int32 ProductId = 1;
+}
+message ViewProductResponse{
+    ProductDetails product = 1;
+    string Message = 2;
 }
 message UpdateStockRequest{
     int32 ProductId = 1;
