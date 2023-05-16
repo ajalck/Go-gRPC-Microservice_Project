@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package order;
+
+option go_package ="./pkg/pb";
+
+service OrderService {
+    rpc CreateOrder (CreateOrderRequest) returns (CreateOrderResponse);
+    rpc CancelOrder (CancelOrderRequest) returns (CancelOrderResponse);
+}
+
+message CreateOrderRequest{
+    int32 UserId = 1;
+    int32 ProductId = 2;
+    int32 Quantity = 3;
+}
+message CreateOrderResponse{
+    string message = 1;
+    int32 UserId = 2;
+    int32 ProductId = 3;
+    string ProductName = 4;
+    int32 Quantity = 5;
+    float TotalPrice = 6;
+    string OrderStatus = 7;
+}
+message CancelOrderRequest{
+    int32 OrderId = 1;
+}
+message CancelOrderResponse{
+    string message = 1;
+    int32 UserId = 2;
+    int32 ProductId = 3;
+    string ProductName = 4;
+    int32 Quantity = 5;
+    string OrderStatus = 6;
+}
