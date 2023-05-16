@@ -40,6 +40,8 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/ajalck/Go-gRPC-Microservice_Project/auth_management v0.0.0-20230515125500-76fa8ef9be33 h1:kbQccOgK8CjYy4yRt83Xpq/JxOn/LKWif7oHmxRnEWA=
 github.com/ajalck/Go-gRPC-Microservice_Project/auth_management v0.0.0-20230515125500-76fa8ef9be33/go.mod h1:Kh/ahdXMzNk2dC9QrzGHX8PRplCoTCvgLOtt74c3l/o=
+github.com/ajalck/Go-gRPC-Microservice_Project/product_management v0.0.0-20230516095818-c50a3ba2e509 h1:EHcQ70rxjmZwOMlEMgZzikIHt2kne4L9TDiyjBgrBlk=
+github.com/ajalck/Go-gRPC-Microservice_Project/product_management v0.0.0-20230516095818-c50a3ba2e509/go.mod h1:lcZRvdB1xbpWGfmca32Htdxky1B7o4Z6O27SvKMi5R0=
 github.com/bytedance/sonic v1.5.0/go.mod h1:ED5hyg4y6t3/9Ku1R6dU/4KyJ48DZ4jPhfY1O2AihPM=
 github.com/bytedance/sonic v1.8.0 h1:ea0Xadu+sHlu7x5O3gKhRpQ1IKiMrSiHttPF0ybECuA=
 github.com/bytedance/sonic v1.8.0/go.mod h1:i736AoUSYt75HyZLoJW9ERYxcy6eaN6h4BZXU064P/U=
