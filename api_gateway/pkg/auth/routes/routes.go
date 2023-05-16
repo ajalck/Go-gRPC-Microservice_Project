@@ -17,7 +17,7 @@ func AuthRoutes(r *gin.Engine, c *config.Config, logger hclog.Logger) *client.Se
 	user := r.Group("/user")
 	{
 		user.POST("/register", authHandler.Register)
-		user.POST("/login")
+		user.POST("/login", authHandler.Login)
 	}
 	return svc
 }
