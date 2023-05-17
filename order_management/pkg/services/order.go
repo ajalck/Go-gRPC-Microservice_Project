@@ -59,7 +59,7 @@ func (s *OrderServer) CancelOrder(c context.Context, req *pb.CancelOrderRequest)
 		return &pb.CancelOrderResponse{Message: "Order not found"}, result.Error
 	}
 
-	result = s.DB.Where("id", req.OrderId).Update("order_status", "cancelled")
+	result = s.DB.Table("orders").Where("id", req.OrderId).Update("order_status", "cancelled")
 	if result.Error != nil {
 		return &pb.CancelOrderResponse{Message: "Failed to cancell order"}, result.Error
 	}
@@ -70,9 +70,9 @@ func (s *OrderServer) CancelOrder(c context.Context, req *pb.CancelOrderRequest)
 
 	if _, err := s.PSC.Client.UpdateStock(context.Background(), &productPB.UpdateStockRequest{
 		ProductId: order.ProductID,
-		Stock:     res.Product.Stock + order.Quantity,
+		Stock:     (res.Product.Stock + order.Quantity),
 	}); err != nil {
-		return &pb.CancelOrderResponse{Message: "Failed to update order"}, err
+		return &pb.CancelOrderResponse{Message: "Failed to update products"}, err
 	}
 
 	return &pb.CancelOrderResponse{

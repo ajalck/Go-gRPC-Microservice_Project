@@ -23,11 +23,13 @@ func InitMiddleware(client *auth.ServiceClient) *MiddlewareServiceClient {
 func (m *MiddlewareServiceClient) Authorize(c *gin.Context) {
 	authtoken := c.Request.Header.Get("Authorization")
 	if authtoken == "" {
+		c.AbortWithStatus(http.StatusUnauthorized)
 		c.JSON(http.StatusUnauthorized, "Failed to Authorize")
 		return
 	}
 	token := strings.Split(authtoken, "Bearer ")
 	if len(token) > 2 {
+		c.AbortWithStatus(http.StatusUnauthorized)
 		c.JSON(http.StatusUnauthorized, "Failed to Authorize")
 		return
 	}
@@ -35,9 +37,11 @@ func (m *MiddlewareServiceClient) Authorize(c *gin.Context) {
 		Token: token[1],
 	})
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, err)
+		c.AbortWithStatus(http.StatusUnauthorized)
+		c.JSON(http.StatusUnauthorized, "Failed to Authorize")
 		return
 	}
 	c.Writer.Header().Set("User_id", strconv.Itoa(int(res.UserId)))
-	c.JSON(int(res.Status), res.GetMessage())
+	c.JSON(http.StatusAccepted, res.GetMessage())
+	c.Next()
 }

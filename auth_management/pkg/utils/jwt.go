@@ -23,7 +23,7 @@ func (w *JWTWrapper) GenerateToken(user models.User) (signedToken string, err er
 		Id:    int64(user.ID),
 		Email: user.Email,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(24 * 1).Unix(),
+			ExpiresAt: time.Now().Add(time.Hour * 10).Unix(),
 			Issuer:    w.Issuer,
 		},
 	}

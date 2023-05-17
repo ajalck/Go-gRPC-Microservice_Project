@@ -25,7 +25,7 @@ func ProductRoutes(r *gin.Engine, c *config.Config, authSvcC *authClient.Service
 	}
 	user := r.Group("/user")
 	{
-		user.Use(authorize.Authorize)
-		user.GET("/listproducts", pdtHandler.ListProduct)
+
+		user.GET("/listproducts", authorize.Authorize, pdtHandler.ListProduct)
 	}
 }

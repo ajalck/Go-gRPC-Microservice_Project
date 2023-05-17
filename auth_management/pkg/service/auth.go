@@ -30,10 +30,7 @@ func (s *AuthServer) Register(c context.Context, req *pb.RegisterRequest) (*pb.R
 	}
 	result := s.DB.Create(&user)
 	if result.Error != nil {
-		return &pb.RegisterResponse{
-			Status:  400,
-			Message: "Failed to Register new user",
-		}, result.Error
+		return nil, result.Error
 	}
 
 	return &pb.RegisterResponse{
@@ -46,23 +43,14 @@ func (s *AuthServer) Login(c context.Context, req *pb.LoginRequest) (*pb.LoginRe
 	user := &models.User{}
 	result := s.DB.Where("email", req.Email).First(&user)
 	if result.Error != nil {
-		return &pb.LoginResponse{
-			Status:  400,
-			Message: "Failed to Login",
-		}, errors.New("User not found")
+		return nil, errors.New("User not found")
 	}
 	if err := utils.CheckPasswordHash(req.Password, user.Password); err != nil {
-		return &pb.LoginResponse{
-			Status:  400,
-			Message: "Failed to Login",
-		}, errors.New("Mismatch in password")
+		return nil, errors.New("Mismatch in password")
 	}
 	token, err := s.Jwtwrapper.GenerateToken(*user)
 	if err != nil {
-		return &pb.LoginResponse{
-			Status:  400,
-			Message: "Failed to Login",
-		}, err
+		return nil, err
 	}
 	return &pb.LoginResponse{
 		Status:  200,

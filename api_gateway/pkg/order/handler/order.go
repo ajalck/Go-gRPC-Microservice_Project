@@ -7,6 +7,7 @@ import (
 
 	"github.com/ajalck/Go-gRPC-Microservice_Project/order_management/pkg/pb"
 	"github.com/gin-gonic/gin"
+	"google.golang.org/grpc/status"
 )
 
 type OrderHandler struct {
@@ -32,7 +33,11 @@ func (h *OrderHandler) CreateOrder(c *gin.Context) {
 		Quantity:  body.Quantity,
 	})
 	if err != nil {
-		c.JSON(400, res)
+		grpcError, ok := status.FromError(err)
+		if ok {
+			errMessage := grpcError.Message()
+			c.JSON(http.StatusBadGateway, errMessage)
+		}
 		return
 	}
 	c.JSON(200, res)
@@ -41,6 +46,7 @@ func (h *OrderHandler) CreateOrder(c *gin.Context) {
 type CancelOrderRequestBody struct {
 	OrderId int32 `json:"order_id"`
 }
+
 func (h *OrderHandler) CancelOrder(c *gin.Context) {
 	body := &CancelOrderRequestBody{}
 
@@ -49,11 +55,15 @@ func (h *OrderHandler) CancelOrder(c *gin.Context) {
 		return
 	}
 
-	res,err:=h.C.CancelOrder(context.Background(),&pb.CancelOrderRequest{
+	res, err := h.C.CancelOrder(context.Background(), &pb.CancelOrderRequest{
 		OrderId: body.OrderId,
 	})
 	if err != nil {
-		c.JSON(400, res)
+		grpcError, ok := status.FromError(err)
+		if ok {
+			errMessage := grpcError.Message()
+			c.JSON(http.StatusBadGateway, errMessage)
+		}
 		return
 	}
 	c.JSON(200, res)

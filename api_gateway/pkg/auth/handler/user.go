@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/ajalck/Go-gRPC-Microservice_Project/auth_management/pkg/pb"
+	"google.golang.org/grpc/status"
 
 	"github.com/gin-gonic/gin"
 )
@@ -29,9 +30,13 @@ func (h *AuthHandler) Register(ctx *gin.Context) {
 		Email:    body.Email,
 		Password: body.Password,
 	})
-
 	if err != nil {
-		ctx.AbortWithError(http.StatusBadGateway, err)
+		grpcError, ok := status.FromError(err)
+		if ok {
+			errMessage := grpcError.Message()
+			ctx.JSON(http.StatusBadGateway, errMessage)
+		}
+		return
 	}
 	ctx.JSON(int(res.Status), res)
 }
@@ -48,7 +53,11 @@ func (h *AuthHandler) Login(ctx *gin.Context) {
 		Password: body.Password,
 	})
 	if err != nil {
-		ctx.AbortWithError(http.StatusBadGateway, err)
+		grpcError, ok := status.FromError(err)
+		if ok {
+			errMessage := grpcError.Message()
+			ctx.JSON(http.StatusBadGateway, errMessage)
+		}
 		return
 	}
 	output := &pb.LoginResponse{

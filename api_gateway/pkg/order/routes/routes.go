@@ -18,8 +18,8 @@ func OrderRoutes(r *gin.Engine, c *config.Config, authSvcC *authClient.ServiceCl
 	ordrHandler := handler.OrderHandler{C: ordersvc.Client}
 
 	user := r.Group("/user")
+	user.Use(authorize.Authorize)
 	{
-		user.Use(authorize.Authorize)
 		user.POST("/createorder", ordrHandler.CreateOrder)
 		user.PATCH("/cancelorder", ordrHandler.CancelOrder)
 	}

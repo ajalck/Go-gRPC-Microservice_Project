@@ -6,6 +6,7 @@ import (
 
 	"github.com/ajalck/Go-gRPC-Microservice_Project/product_management/pkg/pb"
 	"github.com/gin-gonic/gin"
+	"google.golang.org/grpc/status"
 )
 
 type ProductHandler struct {
@@ -31,7 +32,11 @@ func (h *ProductHandler) CreateProduct(ctx *gin.Context) {
 		Price:       body.Price,
 	})
 	if err != nil {
-		ctx.JSON(http.StatusNotFound, err)
+		grpcError, ok := status.FromError(err)
+		if ok {
+			errMessage := grpcError.Message()
+			ctx.JSON(http.StatusBadGateway, errMessage)
+		}
 		return
 	}
 	ctx.JSON(200, res)
@@ -39,7 +44,11 @@ func (h *ProductHandler) CreateProduct(ctx *gin.Context) {
 func (h *ProductHandler) ListProduct(ctx *gin.Context) {
 	res, err := h.PdtClient.ListProduct(context.Background(), &pb.ListProductRequest{})
 	if err != nil {
-		ctx.JSON(http.StatusNotFound, err)
+		grpcError, ok := status.FromError(err)
+		if ok {
+			errMessage := grpcError.Message()
+			ctx.JSON(http.StatusBadGateway, errMessage)
+		}
 		return
 	}
 	ctx.JSON(200, res)
@@ -84,7 +93,11 @@ func (h *ProductHandler) UpdateStock(ctx *gin.Context) {
 		Stock:     body.Stock,
 	})
 	if err != nil {
-		ctx.JSON(http.StatusBadGateway, err)
+		grpcError, ok := status.FromError(err)
+		if ok {
+			errMessage := grpcError.Message()
+			ctx.JSON(http.StatusBadGateway, errMessage)
+		}
 		return
 	}
 	ctx.JSON(200, res)
